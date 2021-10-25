@@ -9,11 +9,11 @@ export default function BudgetItem(props) {
     <div className="flex items-center space-x-5">
       <div className="flex-shrink-0">
         {action === 'income' ? (
-          <div className="bg-green-500 rounded-full w-12 h-12 flex justify-center items-center p-3">
+          <div className="bg-green-500 border rounded-full w-12 h-12 flex justify-center items-center p-3">
             <TrendingUpIcon className="w-8 h-8 text-white" />
           </div>
         ) : (
-          <div className="bg-red-500 rounded-full w-12 h-12 flex justify-center items-center p-3">
+          <div className="bg-red-500 border rounded-full w-12 h-12 flex justify-center items-center p-3">
             <TrendingDownIcon className="w-8 h-8 text-white" />
           </div>
         )}
