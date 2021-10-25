@@ -12,7 +12,7 @@ export default function Modal() {
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className=" gradient-button rounded-full w-14 h-14 flex justify-center items-center"
+              className="gradient-button rounded-full w-14 h-14 flex justify-center items-center"
             >
               <svg
                 width="49"
