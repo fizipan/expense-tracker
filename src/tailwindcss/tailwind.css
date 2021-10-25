@@ -10,7 +10,7 @@
 
 @layer components {
   .max-w-app {
-    @apply max-w-[550px] min-w-[440px];
+    @apply max-w-[550px] min-w-[400px];
   }
 
   .gradient-app {
