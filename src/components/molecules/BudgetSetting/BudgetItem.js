@@ -13,7 +13,7 @@ export default function BudgetItem(props) {
             <TrendingUpIcon className="w-8 h-8 text-white" />
           </div>
         ) : (
-          <div className="bg-[#FF725E] rounded-full w-12 h-12 flex justify-center items-center p-3">
+          <div className="bg-red-500 rounded-full w-12 h-12 flex justify-center items-center p-3">
             <TrendingDownIcon className="w-8 h-8 text-white" />
           </div>
         )}
