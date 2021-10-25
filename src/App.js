@@ -6,7 +6,7 @@ import Modal from 'components/atoms/Modal';
 export default function App() {
   return (
     <div>
-      <div className="antialiased mx-auto max-w-app w-full bg-white">
+      <div className="relative antialiased mx-auto w-full max-w-app bg-white">
         {/* Header */}
         <Header />
 
