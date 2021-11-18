@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import PropTypes from 'prop-types';
+import FormatNumber from 'utils/FormatNumber';
 
 export default function StatisticsCard(props) {
   const { title, value } = props;
@@ -14,7 +15,7 @@ export default function StatisticsCard(props) {
         } text-lg font-semibold leading-7 tracking-wide`}
       >
         Rp.
-        <span className="pl-2">{new Intl.NumberFormat().format(value)}</span>
+        <span className="pl-2">{FormatNumber(value)}</span>
       </p>
     </div>
   );

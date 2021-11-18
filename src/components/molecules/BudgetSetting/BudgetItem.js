@@ -1,10 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import PropTypes from 'prop-types';
 
+import FormatNumber from 'utils/FormatNumber';
+
 import { TrendingUpIcon, TrendingDownIcon } from '@heroicons/react/outline';
 
 export default function BudgetItem(props) {
   const { name, action, value, date } = props;
+
+  const getDate = new Date(date).toDateString();
+
   return (
     <div className="flex items-center space-x-5">
       <div className="flex-shrink-0">
@@ -21,7 +26,7 @@ export default function BudgetItem(props) {
       <div className="flex-1 space-y-1">
         <h6 className="text-lg font-medium leading-7 tracking-wider">{name}</h6>
         <p className="text-gray-500 text-xs font-medium leading-4 tracking-wide">
-          {date}
+          {getDate}
         </p>
       </div>
       <div
@@ -30,7 +35,7 @@ export default function BudgetItem(props) {
         } text-lg font-medium leading-7 tracking-wide`}
       >
         {action === 'income' ? '+' : '-'}
-        <span className="pl-2">{new Intl.NumberFormat().format(value)}</span>
+        <span className="pl-2">{FormatNumber(value)}</span>
       </div>
     </div>
   );

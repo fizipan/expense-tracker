@@ -32,6 +32,9 @@
     "import/extensions": "off",
     "no-undef": "off",
     "react/jsx-no-bind": "off",
+    "react/prop-types": "off",
+    "no-return-assign": "off",
+    "no-param-reassign": "off",
     "max-len": [
       "warn",
       {
