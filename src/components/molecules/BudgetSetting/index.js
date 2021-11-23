@@ -13,9 +13,11 @@ export default function BudgetSetting() {
       <div className="space-y-5 rounded-md mt-4 overflow-y-auto scrollbar-hide max-h-[27.2rem] lg:max-h-[24.6rem]">
         {transactions.map((transaction) => (
           <BudgetItem
-            name={transaction.name}
+            key={transaction.id}
+            id={transaction.id}
+            title={transaction.title}
             action={transaction.action}
-            value={transaction.value}
+            amount={transaction.amount}
             date={transaction.date}
           />
         ))}

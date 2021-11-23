@@ -7,11 +7,11 @@ export default function Header() {
 
   const totalIncome = transactions
     .filter((transaction) => transaction.action === 'income')
-    .reduce((acc, item) => (acc += item.value), 0);
+    .reduce((acc, item) => (acc += item.amount), 0);
 
   const totalExpenditure = transactions
     .filter((transaction) => transaction.action === 'expenditure')
-    .reduce((acc, item) => (acc += item.value), 0);
+    .reduce((acc, item) => (acc += item.amount), 0);
 
   const total = totalIncome - totalExpenditure;
 

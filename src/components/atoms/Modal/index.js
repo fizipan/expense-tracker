@@ -1,8 +1,47 @@
+import { Fragment, useContext, useState } from 'react';
+
+import { GlobalContext } from 'context/GlobalState';
+
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
 
 export default function Modal() {
+  const { addTransaction } = useContext(GlobalContext);
+
   const [isOpen, setIsOpen] = useState(false);
+
+  const [title, setTitle] = useState('');
+  const [action, setAction] = useState('income');
+  const [amount, setAmount] = useState(0);
+
+  const errorInput = {
+    titleError: 'This field title is required',
+    actionError: 'This field action is required',
+    amountError: {
+      isRequired: 'This field amount is required',
+      moreThan: 'This field action more than 2000',
+    },
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const convertAmount = +amount;
+
+    const newTransaction = {
+      id: Math.floor(Math.random() * 100000000),
+      date: new Date().getTime(),
+      title,
+      action,
+      amount: convertAmount,
+    };
+
+    addTransaction(newTransaction);
+
+    setTitle('');
+    setAction('income');
+    setAmount('');
+    setIsOpen(false);
+  }
 
   return (
     <>
@@ -72,53 +111,88 @@ export default function Modal() {
                 >
                   Add new transaction
                 </Dialog.Title>
-                <div className="mt-4 space-y-4">
-                  <label htmlFor="title" className="block">
-                    <span className="text-gray-500 text-sm">Title</span>
-                    <input
-                      type="text"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                      name="title"
-                      id="title"
-                      placeholder="Enter title..."
-                      required
-                      autoComplete="off"
-                    />
-                  </label>
-                  <label htmlFor="action" className="block">
-                    <span className="text-gray-500 text-sm">Action</span>
-                    <select
-                      name="action"
-                      id="action"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                    >
-                      <option value="income">Income (+)</option>
-                      <option value="expenditure">Expenditure (-)</option>
-                    </select>
-                  </label>
-                  <label htmlFor="amount" className="block">
-                    <span className="text-gray-500 text-sm">Amount</span>
-                    <input
-                      type="number"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                      name="amount"
-                      id="amount"
-                      placeholder="Enter amount..."
-                      required
-                      autoComplete="off"
-                    />
-                  </label>
-                </div>
+                <form onSubmit={handleSubmit}>
+                  <div className="mt-4 space-y-4">
+                    <label htmlFor="title" className="block">
+                      <span className="text-gray-500 text-sm">Title</span>
+                      <input
+                        type="text"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        name="title"
+                        id="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="Enter title..."
+                        autoComplete="off"
+                      />
+                    </label>
+                    {!title && (
+                      <span className="text-red-500">
+                        {errorInput.titleError}
+                      </span>
+                    )}
 
-                <div className="mt-7 text-right">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Add Transaction
-                  </button>
-                </div>
+                    <label htmlFor="action" className="block">
+                      <span className="text-gray-500 text-sm">Action</span>
+                      <select
+                        name="action"
+                        id="action"
+                        value={action}
+                        onChange={(e) => setAction(e.target.value)}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      >
+                        <option value="income">Income (+)</option>
+                        <option value="expenditure">Expenditure (-)</option>
+                      </select>
+                    </label>
+                    {!action && (
+                      <span className="text-red-500">
+                        {errorInput.actionError}
+                      </span>
+                    )}
+
+                    <label htmlFor="amount" className="block">
+                      <span className="text-gray-500 text-sm">Amount</span>
+                      <input
+                        type="number"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        name="amount"
+                        id="amount"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                        placeholder="Enter amount..."
+                        autoComplete="off"
+                      />
+                    </label>
+                    {!amount && (
+                      <span className="text-red-500">
+                        {errorInput.amountError.isRequired}
+                      </span>
+                    )}
+                    {amount && amount < 2000 ? (
+                      <span className="text-red-500">
+                        {errorInput.amountError.moreThan}
+                      </span>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+
+                  <div className="mt-7 text-right">
+                    {!title || !action || !amount || amount < 2000 ? (
+                      <span className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-400 border border-transparent rounded-md">
+                        Add Transaction
+                      </span>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-green-500 border border-transparent rounded-md hover:bg-green-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500"
+                      >
+                        Add Transaction
+                      </button>
+                    )}
+                  </div>
+                </form>
               </div>
             </Transition.Child>
           </div>

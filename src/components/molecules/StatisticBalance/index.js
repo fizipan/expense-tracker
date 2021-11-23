@@ -7,11 +7,11 @@ export default function StatisticsBalance() {
 
   const totalIncome = transactions
     .filter((transaction) => transaction.action === 'income')
-    .reduce((acc, item) => (acc += item.value), 0);
+    .reduce((acc, item) => (acc += item.amount), 0);
 
   const totalExpenditure = transactions
     .filter((transaction) => transaction.action === 'expenditure')
-    .reduce((acc, item) => (acc += item.value), 0);
+    .reduce((acc, item) => (acc += item.amount), 0);
 
   return (
     <div>
@@ -19,8 +19,8 @@ export default function StatisticsBalance() {
 
       {/* Statistics Card */}
       <div className="grid grid-cols-2 gap-x-3 mt-4">
-        <StatisticsCard title="income" value={totalIncome} />
-        <StatisticsCard title="expenditure" value={totalExpenditure} />
+        <StatisticsCard title="income" amount={totalIncome} />
+        <StatisticsCard title="expenditure" amount={totalExpenditure} />
       </div>
     </div>
   );
